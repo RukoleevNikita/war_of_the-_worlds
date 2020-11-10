@@ -1,16 +1,45 @@
-# import random
+import random
 # task 1
 # Напишите программу по следующему описанию. Есть класс "Воин". От него создаются три экземпляра-юнита. Каждому устанавливается здоровье в 100 очков. В случайном порядке они бьют друг друга. Тот, кто бьет, здоровья не теряет. У того, кого бьют, оно уменьшается на 20 очков от одного удара. После каждого удара надо выводить сообщение, какой юнит атаковал, и сколько у противника осталось здоровья. Как только у кого-то заканчивается ресурс здоровья, программа завершается сообщением о том, кто одержал победу.
 
-class ClassWarrior():
-    def __init__(self, n, hp,  att,):
-        self.name = n
-        self.health = hp
-        self.attack = att
+# task 2
+# Помимо конструктора объектов в языках программирования есть обратный ему метод – деструктор. Он вызывается, когда объект не создается, а уничтожается.
+# В языке программирования Python объект уничтожается, когда исчезают все связанные с ним переменные или им присваивается другое значение, в результате чего связь со старым объектом теряется. Удалить переменную можно с помощью команды языка `del`.
+# В классах Python функцию деструктора выполняет метод `__del__()`.
 
+# 1. Модифицируйте класс "Воин". Теперь его конструктор принимает три параметра (не учитывая self) – имя, силу атаки и уровень здоровья. Сила имеет значение по умолчанию 20, здоровье — 100.
+# 2. У класса "Воин" есть метод, который возвращает строку, включающую в себя всю информацию о нём.
+# 3. Класс "Воин" содержит деструктор, который выводит на экран фразу "Valhalla, … is coming" (вместо троеточия должно выводиться имя воина).
+# 4. Создайте трёх воинов и запустите сражение. Не забывайте сразу же отправлять в Валгаллу погибшего воина.
+# 5. В конце программы выведите всю информацию о победителе.
+
+
+class ClassWarrior():
+    def __init__(self, name, health=100,  attack=20):
+        self.name = name
+        self.health = health
+        self.attack = attack
+
+    def info(self):
+        return print('Воин: {}; здоровье: {}; аттака: {};'.format(
+            self.name, self.health, self.attack))
+
+    # print('Воин: {}; здоровье: {}; аттака: {};'.format(
+    #     self.name, self.health, self.attack))
 
     #     # if __name__ == '__main__':
-warriorFirst = ClassWarrior('Visigoth', 100, 20)
-warriorSecond = ClassWarrior('Roland', 100, 20)
-warriorThird = ClassWarrior('Attila', 100, 20)
-print(warriorFirst.__dict__, warriorSecond.__dict__, warriorThird.__dict__)
+
+    def healthUpdate(self, health):
+        self.health = health
+        return health
+        print('Уровень здоровья {}: {}'.format(self.health, self.name))
+
+    def battle(self, attackingWarrior):
+        print('{} нанёс урон {}'.format(self.name, attackingWarrior.name))
+        attackingWarrior.healthUpdate(
+            attackingWarrior.healthUpdate() - self.attack)
+
+
+warriorFirst = ClassWarrior('Visigoth', 100, 20).info()
+warriorSecond = ClassWarrior('Roland', 100, 20).info()
+warriorThird = ClassWarrior('Attila', 100, 20).info()
